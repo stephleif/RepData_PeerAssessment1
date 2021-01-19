@@ -11,7 +11,6 @@ output:
 ```{r chunk-load}
 
 library(tidyverse)
-library(data.table)
 library(ggplot2)
 library(lubridate)
 
@@ -80,7 +79,7 @@ ggplot(meansteps, aes(x=interval, y=steps)) +
 
 ## Imputing missing values
 
-The above calculations were made after omitting missing values.  Missing values can be inferred using numerous methods.  The simplest is to replace every missing value with an overall average.  One primary factor to consider is what is the purpose of inferring (manufacturing) missing values.  It makes sense to do so when trying to make an image appear better.  There seems no good purpose to so for this information, but I will go through the motions for you.
+The above calculations were made after omitting missing values.  Missing values can be inferred using numerous methods.  The simplest is to replace every missing value with an overall average.  One primary factor to consider is what is the purpose of inferring (manufacturing) missing values.  It makes sense to do so when trying to make an image appear better or trying to predict what the missing data might show. 
 ```{r chunk-quantitymissing}
 missing_step_values <- prettyNum(sum(is.na(mydata$steps)), big.mark = ",")
 
@@ -99,9 +98,6 @@ ggplot(missing_by_date, aes(x=as_date(the_date),
        x = "Date",
         subtitle = paste("The data set is missing ", missing_step_values, 
                          "step values"))
-                                
- ##                     label = wday(the_date))) +
-  ##           scale_x_date(date_breaks = "2 weeks") +
 
 ```
 From the graph, the steps for an entire day appears to be there or be absent.
@@ -142,7 +138,7 @@ When we look at the average number of steps in an interval, there are no visible
 library(imputeTS)
 library(knitr)
 
-## make univariate 
+## make univariate imputed data based on mean 
 
 imp.data <- na_mean(mydata) 
 
@@ -210,7 +206,7 @@ days.steps.imp <- imp.data %>% mutate(the_date = ymd(date),
 
 ggplot(days.steps.actual, aes(x= the.day, y = steps,
                        fill = "actual")) +
-  geom_col(stat="identity") +
+  geom_col() +
   geom_col(mapping = aes(x = the.day, y = steps, fill = "imputed"),
            data = days.steps.imp) +
    labs(subtitle = "Average Steps by Day of the week",
