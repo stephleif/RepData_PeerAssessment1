@@ -5,5 +5,6 @@ The instructions said to put them in figures but the generated html code is look
 
 PA1_template_files/figure-html/
 
-All the images are in the figure-html directory which is a subdirectory under PA1_template_files.
-I expect this is a change in knitr from when the assignment was first created.
+All the images are also in the figure-html directory which is a subdirectory under PA1_template_files.
+I expect this is a change in knitr from when the assignment was first created.  They are all the same figures generated from 
+the same knitr run
